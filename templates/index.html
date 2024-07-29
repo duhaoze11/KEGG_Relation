@@ -8,6 +8,23 @@
 </head>
 <body>
     <h1>Welcome to My Flask App</h1>
-    <p>This is a simple Flask application with one page.</p>
+    <p>Enter the genes and select the LLM you would like to use:</p>
+    <form action="/submit" method="post">
+        <label for="gene1">First Gene:</label><br>
+        <input type="text" id="gene1" name="gene1"><br><br>
+        <label for="gene2">Second Gene:</label><br>
+        <input type="text" id="gene2" name="gene2"><br><br>
+        <label for="prompt">Prompt:</label><br>
+        <input type="text" id="prompt" name="prompt", value="template"><br><br>
+        <label>Choose LLM(s):</label><br>
+        <input type="checkbox" id="llm1" name="llm" value="llm1">
+        <label for="llm1">LLM 1</label><br>
+        <input type="checkbox" id="llm2" name="llm" value="llm2">
+        <label for="llm2">LLM 2</label><br>
+        <input type="checkbox" id="llm3" name="llm" value="llm3">
+        <label for="llm3">LLM 3</label><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
