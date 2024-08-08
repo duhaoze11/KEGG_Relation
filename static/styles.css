@@ -1,14 +1,132 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     background-color: #f4f4f4;
 }
 
-h1 {
-    color: #333;
+header {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
-p {
-    font-size: 1.2em;
+#logo {
+    text-align: center;
+    margin-bottom: 20px;
 }
+
+#main-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.form-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.left-column,
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.options input {
+    margin-right: 5px;
+}
+
+.prompt,
+.ascii-encoding,
+.genes {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.prompt input,
+.ascii-encoding input,
+.genes input {
+    margin-left: 10px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.custom-llm-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.custom-llm {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-llm input {
+    margin-right: 10px;
+}
+
+button[type="button"] {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="button"]:hover {
+    background-color: #1976D2;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.results {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.result-column {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.

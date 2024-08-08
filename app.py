@@ -11,8 +11,10 @@ def submit():
     gene1 = request.form.get('gene1')
     gene2 = request.form.get('gene2')
     prompt = request.form.get('prompt')
-    llms = request.form.getlist('llm')
-    return f"Gene 1: {gene1}, Gene 2: {gene2}, Prompt: {prompt}, LLMs: {', '.join(llms)}"
+    ascii_encoding = request.form.get('ascii')
+    options = [option for option in request.form if option.startswith('option')]
+    custom_llms = [value for key, value in request.form.items() if key.startswith('custom_llm')]
+    return f"Gene 1: {gene1}, Gene 2: {gene2}, Prompt: {prompt}, ASCII Encoding: {ascii_encoding}, Options: {', '.join(options)}, Custom LLMs: {', '.join(custom_llms)}"
 
 if __name__ == '__main__':
     app.run(debug=True)

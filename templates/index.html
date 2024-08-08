@@ -5,26 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Flask App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function addCustomLLM() {
+            const customLLMContainer = document.getElementById('customLLMContainer');
+            const customLLMCount = customLLMContainer.children.length + 1;
+            const newLLM = document.createElement('div');
+            newLLM.className = 'custom-llm';
+            newLLM.innerHTML = `
+                <input type="text" name="custom_llm${customLLMCount}" placeholder="Custom LLM ${customLLMCount}">
+                <button type="button" onclick="removeCustomLLM(this)">-</button>
+            `;
+            customLLMContainer.appendChild(newLLM);
+        }
+
+        function removeCustomLLM(button) {
+            const customLLMContainer = document.getElementById('customLLMContainer');
+            customLLMContainer.removeChild(button.parentElement);
+        }
+    </script>
 </head>
 <body>
-    <h1>Welcome to My Flask App</h1>
-    <p>Enter the genes and select the LLM you would like to use:</p>
-    <form action="/submit" method="post">
-        <label for="gene1">First Gene:</label><br>
-        <input type="text" id="gene1" name="gene1"><br><br>
-        <label for="gene2">Second Gene:</label><br>
-        <input type="text" id="gene2" name="gene2"><br><br>
-        <label for="prompt">Prompt:</label><br>
-        <input type="text" id="prompt" name="prompt", value="template"><br><br>
-        <label>Choose LLM(s):</label><br>
-        <input type="checkbox" id="llm1" name="llm" value="llm1">
-        <label for="llm1">LLM 1</label><br>
-        <input type="checkbox" id="llm2" name="llm" value="llm2">
-        <label for="llm2">LLM 2</label><br>
-        <input type="checkbox" id="llm3" name="llm" value="llm3">
-        <label for="llm3">LLM 3</label><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
+    <header>
+        <div id="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <form action="/submit" method="post" id="main-form">
+            <div class="form-container">
+                <div class="left-column">
+                    <div class="options">
+                        <input type="checkbox" id="option1" name="option1" value="option1">
+                        <label for="option1">Option 1</label>
+                        <input type="checkbox" id="option2" name="option2" value="option2">
+                        <label for="option2">Option 2</label>
+                        <input type="checkbox" id="option3" name="option3" value="option3">
+                        <label for="option3">Option 3</label>
+                    </div>
+                    <div class="custom-llm-container" id="customLLMContainer"></div>
+                    <button type="button" onclick="addCustomLLM()">+</button>
+                </div>
+                <div class="right-column">
+                    <div class="prompt">
+                        <label for="prompt">Prompt:</label>
+                        <input type="text" id="prompt" name="prompt">
+                    </div>
+                    <div class="ascii-encoding">
+                        <label for="ascii">ASCII Encodings:</label>
+                        <input type="text" id="ascii" name="ascii">
+                    </div>
+                    <div class="genes">
+                        <label for="gene1">Gene1:</label>
+                        <input type="text" id="gene1" name="gene1">
+                        <label for="gene2">Gene2:</label>
+                        <input type="text" id="gene2" name="gene2">
+                    </div>
+                    <button type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </header>
+    <main>
+        <div class="results">
+            <div class="result-column">
+                <h2>Original Prompt Result</h2>
+                <p>Information:</p>
+                <ul>
+                    <li>Original Prompt</li>
+                    <li>Result</li>
+                </ul>
+            </div>
+            <div class="result-column">
+                <h2>Optimized Prompt</h2>
+                <p>Information need:</p>
+                <ul>
+                    <li>Original</li>
+                </ul>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
