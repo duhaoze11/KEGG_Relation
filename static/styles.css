@@ -129,4 +129,17 @@ main {
     width: 45%;
 }
 
-.
+.result-column h2 {
+    margin-top: 0;
+}
+
+select {
+    width: 100%;
+    max-width: 300px;
+}
+
+select option {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

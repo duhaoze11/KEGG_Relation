@@ -22,6 +22,45 @@
             const customLLMContainer = document.getElementById('customLLMContainer');
             customLLMContainer.removeChild(button.parentElement);
         }
+
+        function updateAscii() {
+            const promptSelect = document.getElementById('prompt-select');
+            const asciiField = document.getElementById('ascii-field');
+            const selectedPrompt = promptSelect.value;
+            
+            const asciiData = JSON.parse(document.getElementById('ascii-data').textContent);
+
+            const selectedAscii = asciiData.find(item => item.prompt === selectedPrompt).ascii;
+
+            asciiField.value = selectedAscii;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            const options = formData.getAll('option1').concat(formData.getAll('option2')).concat(formData.getAll('option3'));
+            const customLLMs = [];
+            for (let key in data) {
+                if (key.startsWith('custom_llm')) {
+                    customLLMs.push(data[key]);
+                }
+            }
+
+            const resultDiv = document.getElementById('optimized_result');
+            resultDiv.innerHTML = `
+                <h2>Optimized Prompt Result</h2>
+                <p>Information:</p>
+                <ul>
+                    <li>Gene 1: ${data.gene1}</li>
+                    <li>Gene 2: ${data.gene2}</li>
+                    <li>Prompt: ${data.prompt}</li>
+                    <li>ASCII Encoding: ${data.ascii}</li>
+                    <li>Options: ${options.join(', ')}</li>
+                    <li>Custom LLMs: ${customLLMs.join(', ')}</li>
+                </ul>
+            `;
+        }
     </script>
 </head>
 <body>
@@ -29,7 +68,7 @@
         <div id="logo">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
         </div>
-        <form action="/submit" method="post" id="main-form">
+        <form id="main-form" onsubmit="handleSubmit(event)">
             <div class="form-container">
                 <div class="left-column">
                     <div class="options">
@@ -45,12 +84,16 @@
                 </div>
                 <div class="right-column">
                     <div class="prompt">
-                        <label for="prompt">Prompt:</label>
-                        <input type="text" id="prompt" name="prompt">
+                        <label for="prompt-select">Choose a Prompt:</label>
+                        <select id="prompt-select" name="prompt" onchange="updateAscii()">
+                            {% for item in ascii_data %}
+                                <option value="{{ item.prompt }}">{{ item.prompt }}</option>
+                            {% endfor %}
+                        </select>                            
                     </div>
                     <div class="ascii-encoding">
-                        <label for="ascii">ASCII Encodings:</label>
-                        <input type="text" id="ascii" name="ascii">
+                        <label for="ascii-field">ASCII Encoding:</label>
+                        <input type="text" id="ascii-field" name="ascii" readonly>
                     </div>
                     <div class="genes">
                         <label for="gene1">Gene1:</label>
@@ -62,23 +105,31 @@
                 </div>
             </div>
         </form>
+        <!-- This hidden div contains the ascii data in JSON format -->
+        <div id="ascii-data" style="display: none;">
+            {{ ascii_data | tojson | safe }}
+        </div>
     </header>
     <main>
         <div class="results">
             <div class="result-column">
-                <h2>Original Prompt Result</h2>
-                <p>Information:</p>
-                <ul>
-                    <li>Original Prompt</li>
-                    <li>Result</li>
-                </ul>
+                <div id="original_result">
+                    <h2>Original Prompt Result</h2>
+                    <p>Information:</p>
+                    <ul>
+                        <li>Original Prompt</li>
+                        <li>Result</li>
+                    </ul>
+                </div>
             </div>
             <div class="result-column">
-                <h2>Optimized Prompt</h2>
-                <p>Information need:</p>
-                <ul>
-                    <li>Original</li>
-                </ul>
+                <div id="optimized_result">
+                    <h2>Optimized Prompt</h2>
+                    <p>Information need:</p>
+                    <ul>
+                        <li>Original</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>

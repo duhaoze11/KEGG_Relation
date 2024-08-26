@@ -1,10 +1,16 @@
 from flask import Flask, render_template, request
+# import 
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    ascii_data = [
+        {"prompt": '''System Biology Architect Conduct an analysis of the response of {gene2} as a result of changes in {gene1}, using the KEGG Pathway Database. Communicate clearly the relationship between {gene1} and {gene2} using "activation", "inhibition", "phosphorylation" or "no information" when there is no known relation.''', "ascii": "\{ggr9?Rp**1$H31"},
+        {"prompt": "Prompt 2", "ascii": "ASCII2"},
+        {"prompt": "Prompt 3", "ascii": "ASCII3"},
+    ]
+    return render_template('index.html', ascii_data=ascii_data)
 
 @app.route('/submit', methods=['POST'])
 def submit():
